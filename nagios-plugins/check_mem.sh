@@ -77,19 +77,21 @@ while [ $# -gt 0 ]; do
 shift
 done
 
+FREE_PER=$(echo "${FREE_MEM}*100"|bc)
+
 #Critical
 if [ `expr ${FREE_MEM} \< ${MEM_C}` -eq 1 ];then
-    echo "Mem Free ${FREE_MEM},Critical"
+    echo "Mem Free ${FREE_PER}%,Critical"
     exit $STATE_CRITICAL
 fi
 
 #Warning
 if [ `expr ${FREE_MEM} \< ${MEM_W}` -eq 1 ];then
-    echo "Mem Free ${FREE_MEM},Warning"
+    echo "Mem Free ${FREE_PER}%,Warning"
     exit $STATE_WARNING
 fi
 
 
 #OK
-echo "Mem Free ${FREE_MEM}"
+echo "Mem Free ${FREE_PER}%"
 exit $STATE_OK
